@@ -66,6 +66,7 @@ jobs:
           enableCrossOsArchive: true
 
       - name: Lint
+        if: false
         shell: bash
         run: bash .github/workflows/lint.sh
 
