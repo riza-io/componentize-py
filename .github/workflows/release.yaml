@@ -93,26 +93,26 @@ jobs:
               target: "",
               targetDir: "target/release",
             }
-          - {
-              os: "ubuntu-latest",
-              arch: "aarch64",
-              maturin_target: "aarch64",
-              wasiSDK: "linux",
-              extension: "",
-              buildArgs: "--target aarch64-unknown-linux-gnu",
-              target: "aarch64-unknown-linux-gnu",
-              targetDir: "target/aarch64-unknown-linux-gnu/release",
-          }
-          - {
-              os: "macos-latest",
-              arch: "amd64",
-              maturin_target: "x86_64",
-              wasiSDK: "macos",
-              extension: "",
-              buildArgs: "",
-              target: "",
-              targetDir: "target/release",
-            }
+          #- {
+          #    os: "ubuntu-latest",
+          #    arch: "aarch64",
+          #    maturin_target: "aarch64",
+          #    wasiSDK: "linux",
+          #    extension: "",
+          #    buildArgs: "--target aarch64-unknown-linux-gnu",
+          #    target: "aarch64-unknown-linux-gnu",
+          #    targetDir: "target/aarch64-unknown-linux-gnu/release",
+          #}
+          #- {
+          #    os: "macos-latest",
+          #    arch: "amd64",
+          #    maturin_target: "x86_64",
+          #    wasiSDK: "macos",
+          #    extension: "",
+          #    buildArgs: "",
+          #    target: "",
+          #    targetDir: "target/release",
+          #  }
           - {
               os: "macos-latest",
               arch: "aarch64",
@@ -123,16 +123,16 @@ jobs:
               target: "aarch64-apple-darwin",
               targetDir: "target/aarch64-apple-darwin/release",
             }
-          - {
-              os: "windows-latest",
-              arch: "amd64",
-              maturin_target: "x64",
-              wasiSDK: "",
-              extension: ".exe",
-              buildArgs: "",
-              target: "",
-              targetDir: "target/release",
-            }
+          #- {
+          #    os: "windows-latest",
+          #    arch: "amd64",
+          #    maturin_target: "x64",
+          #    wasiSDK: "",
+          #    extension: ".exe",
+          #    buildArgs: "",
+          #    target: "",
+          #    targetDir: "target/release",
+          #  }
     steps:
       - name: Checkout
         uses: actions/checkout@v3
