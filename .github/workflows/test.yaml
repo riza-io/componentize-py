@@ -67,7 +67,7 @@ jobs:
       - name: Checkout zlib
         uses: actions/checkout@v4
         with:
-          repository: "github.com/madler/zlib"
+          repository: "madler/zlib"
           ref: "0f51fb4933fc9ce18199cb2554dacea8033e7fd3"
           path: "zlib/src"
 
