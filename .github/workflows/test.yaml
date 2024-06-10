@@ -1,7 +1,6 @@
 name: Test
 on:
   pull_request:
-    branches: [main, dev]
     paths-ignore:
       - "examples/**"
       - "README.md"
@@ -19,7 +18,7 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: 'recursive'
 
@@ -64,6 +63,30 @@ jobs:
           path: cpython/builddir/wasi
           key: cpython-wasi
           enableCrossOsArchive: true
+
+      - name: Checkout zlib
+        uses: actions/checkout@v4
+        with:
+          repository: "github.com/madler/zlib"
+          ref: "0f51fb4933fc9ce18199cb2554dacea8033e7fd3"
+          path: "zlib/src"
+
+      - name: Build zlib
+        working-directory: zlib/src
+        run:
+          - mkdir zlib/install 
+          - ./configure --static --prefix="${PWD}../install"
+          - make
+          - make install
+        env:
+          CHOST: "Linux"
+          CC: "/opt/wasi-sdk/bin/clang"
+          LDSHARED: "/opt/wasi-sdk/bin/clang"
+          CFLAGS: "-fPIC"
+          CXX: "/opt/wasi-sdk/bin/clang++"
+          LD: "/opt/wasi-sdk/bin/wasm-ld"
+          AR: "/opt/wasi-sdk/bin/ar"
+          RANLIB: "/opt/wasi-sdk/bin/ranlib"
 
       - name: Lint
         if: false
