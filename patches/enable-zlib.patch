@@ -1,0 +1,13 @@
+diff --git a/Modules/Setup b/Modules/Setup
+index a8faa1d102..f5875af06f 100644
+--- a/Modules/Setup
++++ b/Modules/Setup
+@@ -204,7 +204,7 @@ PYTHONPATH=$(COREPYTHONPATH)
+ #_gdbm _gdbmmodule.c -lgdbm
+ #_lzma _lzmamodule.c -llzma
+ #_uuid _uuidmodule.c -luuid
+-#zlib  zlibmodule.c -lz
++zlib  zlibmodule.c -lz -I/opt/wasi-zlib/include -L/opt/wasi-zlib/lib
+ 
+ # The readline module also supports libeditline (-leditline).
+ # Some systems may require -ltermcap or -ltermlib.

@@ -25,9 +25,36 @@ jobs:
         with:
           submodules: 'recursive'
 
+      - name: Patch CPython
+        working-directory: cpython
+        run: patch -p1 <../patches/enable-zlib.patch 
+
       - uses: actions/setup-python@v4
         with:
           python-version: '3.12'
+
+      - name: Checkout zlib
+        uses: actions/checkout@v4
+        with:
+          repository: "madler/zlib"
+          ref: "0f51fb4933fc9ce18199cb2554dacea8033e7fd3"
+          path: "zlib/src"
+
+      - name: Build zlib
+        working-directory: zlib/src
+        run: |
+          ./configure --static --prefix="/opt/wasi-zlib"
+          make
+          make install
+        env:
+          CHOST: "Linux"
+          CC: "/opt/wasi-sdk/bin/clang"
+          LDSHARED: "/opt/wasi-sdk/bin/clang"
+          CFLAGS: "-fPIC"
+          CXX: "/opt/wasi-sdk/bin/clang++"
+          LD: "/opt/wasi-sdk/bin/wasm-ld"
+          AR: "/opt/wasi-sdk/bin/ar"
+          RANLIB: "/opt/wasi-sdk/bin/ranlib"
 
       - name: Install latest Rust stable toolchain
         uses: actions-rs/toolchain@v1
