@@ -74,8 +74,7 @@ jobs:
       - name: Build zlib
         working-directory: zlib/src
         run: |
-          mkdir -p ../install 
-          ./configure --static --prefix="${PWD}../install"
+          ./configure --static --prefix="/opt/wasi-zlib"
           make
           make install
         env:
