@@ -256,7 +256,7 @@ jobs:
         run: |
           ./configure --static --prefix="/opt/wasi-zlib"
           make
-          make install
+          sudo make install
         env:
           CHOST: "Linux"
           CC: "/opt/wasi-sdk/bin/clang"
