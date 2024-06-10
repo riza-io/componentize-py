@@ -73,11 +73,11 @@ jobs:
 
       - name: Build zlib
         working-directory: zlib/src
-        run:
-          - mkdir zlib/install 
-          - ./configure --static --prefix="${PWD}../install"
-          - make
-          - make install
+        run: |
+          mkdir -p ../install 
+          ./configure --static --prefix="${PWD}../install"
+          make
+          make install
         env:
           CHOST: "Linux"
           CC: "/opt/wasi-sdk/bin/clang"
