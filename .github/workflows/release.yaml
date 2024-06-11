@@ -98,6 +98,8 @@ jobs:
           key: cpython-wasi
           enableCrossOsArchive: true
 
+      - run: cat cpython/Modules/Setup
+
       - name: Build
         shell: bash
         run: cargo build --release
@@ -236,14 +238,6 @@ jobs:
           tar xf wasi-sdk-${WASI_SDK_VERSION}-mingw.tar.gz
           echo "WASI_SDK_PATH=$(cygpath -m $(pwd)/wasi-sdk-${WASI_SDK_VERSION})" >> ${GITHUB_ENV}
 
-      - name: Restore CPython
-        id: cache-cpython-wasi
-        uses: actions/cache/restore@v3
-        with:
-          path: cpython/builddir/wasi
-          key: cpython-wasi
-          enableCrossOsArchive: true
-
       - name: Checkout zlib
         uses: actions/checkout@v4
         with:
@@ -267,13 +261,21 @@ jobs:
           AR: "/opt/wasi-sdk/bin/ar"
           RANLIB: "/opt/wasi-sdk/bin/ranlib"
 
+      - name: Restore CPython
+        id: cache-cpython-wasi
+        uses: actions/cache/restore@v3
+        with:
+          path: cpython/builddir/wasi
+          key: cpython-wasi
+          enableCrossOsArchive: true
+
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.config.maturin_target }}
           args: --release --out dist --features pyo3
           manylinux: 2_28
-          docker-options: -v /opt/wasi-sdk:/opt/wasi-sdk
+          docker-options: -v /opt/wasi-sdk:/opt/wasi-sdk -v /opt/wasi-zlib:/opt/wasi-zlib
           before-script-linux: |
             rustup install nightly
             rustup component add rust-src --toolchain nightly
