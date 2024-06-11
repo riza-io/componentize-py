@@ -308,6 +308,8 @@ fn maybe_make_cpython(repo_dir: &Path, wasi_sdk: &Path) -> Result<()> {
             run(Command::new("make")
                 .current_dir(&cpython_wasi_dir)
                 .arg("install"))?;
+        } else {
+            println!("using existing libpython3.12.a");
         }
 
         run(Command::new(wasi_sdk.join("bin/clang"))
@@ -321,6 +323,8 @@ fn maybe_make_cpython(repo_dir: &Path, wasi_sdk: &Path) -> Result<()> {
             .arg(cpython_wasi_dir.join("Modules/_hacl/libHacl_Hash_SHA2.a"))
             .arg(cpython_wasi_dir.join("Modules/_decimal/libmpdec/libmpdec.a"))
             .arg(cpython_wasi_dir.join("Modules/expat/libexpat.a")))?;
+    } else {
+        println!("using existing libpython3.12.so");
     }
 
     Ok(())
