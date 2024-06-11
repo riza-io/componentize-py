@@ -265,7 +265,10 @@ fn add(builder: &mut Builder<impl Write>, root: &Path, path: &Path) -> Result<()
 fn maybe_make_cpython(repo_dir: &Path, wasi_sdk: &Path) -> Result<()> {
     let cpython_wasi_dir = repo_dir.join("cpython/builddir/wasi");
     if !cpython_wasi_dir.join("libpython3.12.so").exists() {
+        println!("building libpython3.12.so")
+
         if !cpython_wasi_dir.join("libpython3.12.a").exists() {
+            println!("building libpython3.12.a")
             let cpython_native_dir = repo_dir.join("cpython/builddir/build");
             if !cpython_native_dir.join(PYTHON_EXECUTABLE).exists() {
                 fs::create_dir_all(&cpython_native_dir)?;
