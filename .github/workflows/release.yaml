@@ -304,13 +304,13 @@ jobs:
               componentize-py${{ matrix.config.extension }}
 
       - name: Upload wheels
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: componentize-py
           path: dist
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
             name: componentize-py
             path: _dist/componentize-py-${{ env.RELEASE_VERSION }}-${{ env.RUNNER_OS }}-${{ matrix.config.arch }}.tar.gz
@@ -339,7 +339,7 @@ jobs:
         run: echo "RELEASE_VERSION=canary" >> $GITHUB_ENV
 
       - name: Download release assets
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
             name: componentize-py
 
@@ -347,7 +347,7 @@ jobs:
         run: |
           sha256sum componentize-py-${{ env.RELEASE_VERSION }}*.tar.gz > checksums-${{ env.RELEASE_VERSION }}.txt
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: componentize-py
           path: checksums-${{ env.RELEASE_VERSION }}.txt
@@ -375,7 +375,7 @@ jobs:
           command: sdist
           args: --out dist
       - name: Upload sdist
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: componentize-py
           path: dist
@@ -387,7 +387,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Download release assets
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
             name: componentize-py
 
